@@ -1,8 +1,6 @@
 import scrapy
 import json
-
-from scrapy.selector import XmlXPathSelector
-import lxml.etree as etree
+import re
 
 class TwitterSpider(scrapy.Spider):
     name = "twitter"
@@ -11,15 +9,15 @@ class TwitterSpider(scrapy.Spider):
         "https://twitter.com/taylorswift13/media"
     ]
 
-    
+    imgList = []
 
     def parse(self, response):
-        imgList = []
+        
 
         for sel in response.xpath('//div[@class="AdaptiveMedia-photoContainer js-adaptive-photo "]'):
             imgurl = sel.xpath('img/@src').extract()
-            imgList.append(imgurl)
-        print len(imgList)  
+            self.imgList.append(imgurl)
+        print len(self.imgList)  
 
         for sel in response.xpath('//ol[@class="stream-items js-navigable-stream"]'):
             itemIdArray = sel.xpath('li/@data-item-id').extract()
@@ -36,13 +34,14 @@ class TwitterSpider(scrapy.Spider):
     def parseJson(self, response):
         jsonresponse = json.loads(response.body_as_unicode())             
 
-        # xml = dicttoxml.dicttoxml(json_dict)
-        # xml = etree.fromstring(jsonresponse["items_html"])
-        # #Apply scrapy's XmlXPathSelector module,and start using xpaths
-        # xml = XmlXPathSelector(text=xml)
-        # data = xml.select('.//div[@class="AdaptiveMedia-photoContainer js-adaptive-photo "]').extract()
-        # print data
-        print jsonresponse["items_html"]
+        # print jsonresponse["items_html"]
+        # searchObj = re.findall("https:\\\/\\\/pbs\.twimg\.com\\\/media\\\/[A-Za-z0-9_]+\.jpg", jsonresponse["items_html"])
+        # searchObj = re.findall("[A-Za-z0-9_]+\.jpg", jsonresponse["items_html"])
+        # print searchObj
+        for m in re.findall("[A-Za-z0-9_]+\.jpg", jsonresponse["items_html"]):
+            self.imgList.append("https://pbs.twimg.com/media/" + m)
+
+        print len(self.imgList)
 
 
 
