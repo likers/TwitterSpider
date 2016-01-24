@@ -2,6 +2,7 @@ import scrapy
 import json
 import re
 
+
 class TwitterSpider(scrapy.Spider):
     name = "twitter"
     allowed_domains = ["twitter.com"]
@@ -17,7 +18,8 @@ class TwitterSpider(scrapy.Spider):
         for sel in response.xpath('//div[@class="AdaptiveMedia-photoContainer js-adaptive-photo "]'):
             imgurl = sel.xpath('img/@src').extract()
             self.imgList.append(imgurl)
-        print len(self.imgList)  
+        # print len(self.imgList) 
+        print self.imgList  
 
         for sel in response.xpath('//ol[@class="stream-items js-navigable-stream"]'):
             itemIdArray = sel.xpath('li/@data-item-id').extract()
@@ -42,6 +44,12 @@ class TwitterSpider(scrapy.Spider):
             self.imgList.append("https://pbs.twimg.com/media/" + m)
 
         print len(self.imgList)
+
+    for url in imgList:
+        item = TwitterspiderItem()
+        item['image_urls'] = url
+
+
 
 
 

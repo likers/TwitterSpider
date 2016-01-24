@@ -61,9 +61,11 @@ NEWSPIDER_MODULE = 'TwitterSpider.spiders'
 
 # Configure item pipelines
 # See http://scrapy.readthedocs.org/en/latest/topics/item-pipeline.html
-#ITEM_PIPELINES = {
-#    'TwitterSpider.pipelines.SomePipeline': 300,
-#}
+ITEM_PIPELINES = {
+   'TwitterSpider.pipelines.ImagesPipeline': 1,
+}
+
+IMAGES_STORE = '/Users/jinhuanli/Google Drive/Code/Python/Scrapy/TwitterSpider/imgStore'
 
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See http://doc.scrapy.org/en/latest/topics/autothrottle.html
