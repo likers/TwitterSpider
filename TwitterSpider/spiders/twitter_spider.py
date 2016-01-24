@@ -2,6 +2,7 @@ import scrapy
 import json
 import re
 from TwitterSpider.items import TwitterspiderItem
+from lxml import etree
 
 class TwitterSpider(scrapy.Spider):
     name = "twitter"
@@ -9,7 +10,7 @@ class TwitterSpider(scrapy.Spider):
     start_urls = [
         "https://twitter.com/taylorswift13/media"
     ]
-
+    counter = 0
     imgList = []
 
     def parse(self, response):
@@ -34,24 +35,23 @@ class TwitterSpider(scrapy.Spider):
 
 
     def parseJson(self, response):
-        jsonresponse = json.loads(response.body_as_unicode())             
+        self.counter += 1
+        if self.counter < 5:
+            jsonresponse = json.loads(response.body_as_unicode())             
+        
+            for url in re.findall(r'https:\/\/pbs.twimg.com\/media\/[A-Za-z0-9_]+.jpg', jsonresponse["items_html"]):
+                self.imgList.append([unicode(url)])
 
-        # print jsonresponse["items_html"]
-        # searchObj = re.findall("https:\\\/\\\/pbs\.twimg\.com\\\/media\\\/[A-Za-z0-9_]+\.jpg", jsonresponse["items_html"])
-        # searchObj = re.findall("[A-Za-z0-9_]+\.jpg", jsonresponse["items_html"])
-        # print searchObj
-        for m in re.findall("[A-Za-z0-9_]+\.jpg", jsonresponse["items_html"]):
-            # url_string = "https://pbs.twimg.com/media/" + m
-            self.imgList.append([unicode("https://pbs.twimg.com/media/" + m)])
 
-        print len(self.imgList)
+            # print self.imgList
+            print len(self.imgList)
 
-        for url in self.imgList:
-            # print url
-            item = TwitterspiderItem()
-            item['image_urls'] = url
-            yield item
-
+            for url in self.imgList:
+                # print url
+                item = TwitterspiderItem()
+                item['image_urls'] = url
+                yield item
+    
 
 
 
