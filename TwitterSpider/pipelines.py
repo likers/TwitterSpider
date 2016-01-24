@@ -6,8 +6,10 @@
 # See: http://doc.scrapy.org/en/latest/topics/item-pipeline.html
 # from scrapy.pipelines.images import ImagesPipeline
 
-class TwitterspiderPipeline(object):
+from scrapy.pipelines.images import ImagesPipeline
+
+class TwitterspiderPipeline(ImagesPipeline):
     def process_item(self, item, spider):
-    	item = TwitterspiderItem()
+    	# item = TwitterspiderItem()
 		
         return item

@@ -64,6 +64,7 @@ NEWSPIDER_MODULE = 'TwitterSpider.spiders'
 ITEM_PIPELINES = {
    'TwitterSpider.pipelines.ImagesPipeline': 1,
 }
+# ITEM_PIPELINES = 'TwitterSpider.pipelines.ImagesPipeline'
 
 IMAGES_STORE = '/Users/jinhuanli/Google Drive/Code/Python/Scrapy/TwitterSpider/imgStore'
 

@@ -1,7 +1,7 @@
 import scrapy
 import json
 import re
-
+from TwitterSpider.items import TwitterspiderItem
 
 class TwitterSpider(scrapy.Spider):
     name = "twitter"
@@ -45,9 +45,10 @@ class TwitterSpider(scrapy.Spider):
 
         print len(self.imgList)
 
-    for url in imgList:
-        item = TwitterspiderItem()
-        item['image_urls'] = url
+        for url in self.imgList:
+            item = TwitterspiderItem()
+            item['image_urls'] = url
+            yield item
 
 
 
