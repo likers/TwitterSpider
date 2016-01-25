@@ -66,7 +66,8 @@ ITEM_PIPELINES = {
 }
 # ITEM_PIPELINES = 'TwitterSpider.pipelines.ImagesPipeline'
 
-IMAGES_STORE = '/Users/jinhuanli/Google Drive/Code/Python/Scrapy/TwitterSpider/imgStore'
+# IMAGES_STORE = '/Users/jinhuanli/Google Drive/Code/Python/Scrapy/TwitterSpider/imgStore'
+IMAGES_STORE = '/Users/jinhuanli/Downloads/timage'
 
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See http://doc.scrapy.org/en/latest/topics/autothrottle.html
