@@ -5,10 +5,13 @@ from TwitterSpider.items import TwitterspiderItem
 from lxml import etree
 
 class TwitterSpider(scrapy.Spider):
+
+    twitterName = raw_input("Please input the twitter id:")
+    print twitterName
     name = "twitter"
     allowed_domains = ["twitter.com"]
     start_urls = [
-        "https://twitter.com/taylorswift13/media"
+        "https://twitter.com/{name}/media".format(name = twitterName)
     ]
     counter = 0
     imgList = []
@@ -27,7 +30,7 @@ class TwitterSpider(scrapy.Spider):
 
         print itemIdArray[-1]
 
-        newUrl = "https://twitter.com/i/profiles/show/taylorswift13/media_timeline?include_available_features=1&include_entities=1&last_note_ts=26&max_position={maxId}&oldest_unread_id=0&reset_error_state=false".format(maxId=itemIdArray[-1])
+        newUrl = "https://twitter.com/i/profiles/show/{name}/media_timeline?include_available_features=1&include_entities=1&last_note_ts=26&max_position={maxId}&oldest_unread_id=0&reset_error_state=false".format(name = twitterName, maxId=itemIdArray[-1])
 
         # print newUrl
 
@@ -49,7 +52,7 @@ class TwitterSpider(scrapy.Spider):
             for itemId in re.findall(r'data-item-id=\"[0-9]+', jsonresponse["items_html"]):
                 itemIdArray.append(itemId[14:])
                 # print itemId[14:]
-            newUrl = "https://twitter.com/i/profiles/show/taylorswift13/media_timeline?include_available_features=1&include_entities=1&last_note_ts=26&max_position={maxId}&oldest_unread_id=0&reset_error_state=false".format(maxId=itemIdArray[-1])
+            newUrl = "https://twitter.com/i/profiles/show/{name}/media_timeline?include_available_features=1&include_entities=1&last_note_ts=26&max_position={maxId}&oldest_unread_id=0&reset_error_state=false".format(name = twitterName, maxId=itemIdArray[-1])
 
             for url in currentList:
                 # print url
