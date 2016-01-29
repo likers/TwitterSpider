@@ -6,3 +6,8 @@ This is a simple twitter image downloader which could download all images from a
 ##Requirements
 - Python 2.7
 - Scrapy 1.0.4
+
+##To Do
+- Add GUI
+- Let user choose storeage path
+- Add download gap time
